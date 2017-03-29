@@ -87,8 +87,7 @@
 
 
         <paper-dialog id="dialog" modal>
-            <paper-input id='scope' label="Scope"></paper-input>
-            
+            <paper-input id='scope' label="Scope"></paper-input>            
             <vaadin-combo-box id='subfilesgrid' class='subfilesgrid' required label="File" items='["Revenue", "Flight"]'></vaadin-combo-box>
             <div class="buttons">
                 <paper-button dialog-confirm raised class="indigo" on-tap="_okHandler">Ok</paper-button>
@@ -112,17 +111,17 @@
             },
 
             ready : function(e){
-                 var infoBox = document.querySelector("#infobox");
-            var username = infoBox.properties.username;
-            var password = infoBox.properties.password;
-            var credentials = username === null || username === "" ? "" : (
-                password === null || password === "" ?  (username + '@') :
-                (username + ':' + password + '@')               
-            );
-            var eclIP = (infoBox.properties.isHpccSecured === "true" ? "https://" : "http://") +  infoBox.properties.cluster_address +
-                ":" + infoBox.properties.port;
-            this.properties.eclIP = eclIP;
-            this.properties.hpccuser = username;
+                var infoBox = document.querySelector("#infobox");
+                var username = infoBox.properties.username;
+                var password = infoBox.properties.password;
+                var credentials = username === null || username === "" ? "" : (
+                    password === null || password === "" ?  (username + '@') :
+                    (username + ':' + password + '@')               
+                );
+                var eclIP = (infoBox.properties.isHpccSecured === "true" ? "https://" : "http://") +  infoBox.properties.cluster_address +
+                    ":" + infoBox.properties.port;
+                this.properties.eclIP = eclIP;
+                this.properties.hpccuser = username;
             },
 
             open: function () {
@@ -131,7 +130,8 @@
 
             _okHandler: function (e) {
 
-                var selectedFile = event.currentTarget.parentElement.parentElement.getElementsByClassName("subfilesgrid")[0].value;
+                //var selectedFile = event.currentTarget.parentElement.parentElement.getElementsByClassName("subfilesgrid")[0].value;
+                var selectedFile = this.$.subfilesgrid.value;
                 sessionStorage.setItem('FilterCriteria', '');
                 sessionStorage.setItem('selecteFile', selectedFile);
                 this.$.ajaxwuCreate.url=this.properties.eclIP + "/WsWorkunits/WUCreate.json?Owner=" + this.properties.hpccuser;
@@ -301,9 +301,10 @@
 </dom-module>
 
 <dom-module id="common-input-view">
-
     <template>
-        <div><vaadin-grid class="projectworksheet" name="worksheet" id="worksheet"></</div>
+        <div>
+            <vaadin-grid class="projectworksheet" name="worksheet" id="worksheet">
+        </div>
     </template>
 
     <script>
